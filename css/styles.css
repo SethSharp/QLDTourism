@@ -9,26 +9,35 @@ html, body {
     height: 100%;
 }
 
+.body {
+    min-height: 80.70%;
+}
+
 header {
-    background-color: black;
-    color: white;
+    color: gold;
+    background-color: turquoise;
+    font-family: 'Grape Nuts', cursive;
     text-align: center;
     padding: 15px;
-    display: flex;
+    height: 5rem;
+    text-align: center;
+}
+
+h1#heading {
+    font-size: 4rem;
 }
 
 .categories {
     width: 95%;
     margin-left: 2.5%;
-    background-color: grey;
     justify-content: center;
+    text-align: center;
 }
 
-.category-header {
-    background-color: black;
-    color: white;
-    width: 24rem;
-    margin: 15px;
+.cat-header {
+    text-align: center;
+    color: black;
+    padding: 30px;
 }
 
 .cards {
@@ -49,28 +58,73 @@ header {
 
 .card {
     margin: 15px;
-    border: 4px solid black;
+    border: 3px solid turquoise;
     border-radius: 8px;
     z-index: 1;
     color: white;
 }
 
-.card-background {
+.card:hover {
+    border: 3px solid maroon;
+}
+
+.island {
     background-image: url("../tmpPhotos/maheno.jpg");
+}
+
+.beach {
+    background-image: url("../tmpPhotos/beach.jpg");
+}
+
+.outback {
+    background-image: url("../tmpPhotos/outback.jpg");
+}
+
+.card-background {
     filter: blur(8px);
     -webkit-filter: blur(8px);
     z-index: -1;
     position: absolute;
     background-size: cover;
+    width: 278px;
+    height: 278px;
 }
 
 .card-header {
     z-index: 1;
 }
 
-footer {
-    background-color: black;
+.destinations {
+    width: 100px;
+    height: 50px;
+    background-color: red;
+}
+
+.destination {
+    margin: 15px;
+    border: 3px solid turquoise;
+    border-radius: 8px;
+    z-index: 1;
     color: white;
+}
+
+.destination-dimensions {
+    width: 200px;
+    height: 200px;
+}
+
+.destination-card {
+    width: 95%;
+    margin-left: 2.5%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer {
+    background-color: turquoise;
+    color: gold;
     position: relative;
     height: 50px;
     bottom: 0;
@@ -78,9 +132,7 @@ footer {
     left: 0;
 }
 
-
 @media all and (max-width: 768px) {
-
     .categories {
         width: 80%;
         margin-left: 10%;
@@ -89,10 +141,6 @@ footer {
 
 @media all and (max-width: 1024px) {
     .category-header {
-        width: 300px;
-    }
-    .card-dimensions {
-        height: 300px;
         width: 300px;
     }
 }
