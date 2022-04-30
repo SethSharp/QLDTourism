@@ -68,17 +68,6 @@ h1#heading {
     border: 3px solid maroon;
 }
 
-.island {
-    background-image: url("../tmpPhotos/maheno.jpg");
-}
-
-.beach {
-    background-image: url("../tmpPhotos/beach.jpg");
-}
-
-.outback {
-    background-image: url("../tmpPhotos/outback.jpg");
-}
 
 .card-background {
     filter: blur(8px);
@@ -97,7 +86,6 @@ h1#heading {
 .destinations {
     width: 100px;
     height: 50px;
-    background-color: red;
 }
 
 .destination {
@@ -114,9 +102,6 @@ h1#heading {
 }
 
 .destination-card {
-    width: 95%;
-    margin-left: 2.5%;
-    background-color: red;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -132,15 +117,156 @@ footer {
     left: 0;
 }
 
+
+/* Arrows */
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+
+    border-bottom: 30px solid black;
+}
+
+.arrow-container {
+    width: 60px;
+    margin-left: 37.5%;
+    justify-content: center;
+    position: relative;
+}
+
+/* MODAL STYLES */
+#modal-container { /* The Modal container */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /* padding-top: 75px;  */
+    left: 10%; top: 10%; /* top left corner at 0, 0*/
+    width: 75%; height: 80%; /* Occupies the whole window */
+    /* overflow: auto; Enable scroll if needed */
+    background-color: white;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+#modal {
+    width: 95%;
+    margin: auto;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+#modal-close {
+    color: black;
+    font-size: 40px;
+    font-weight: bold;
+    cursor:pointer; 
+}
+
+/*  Carousel */
+
+.carousel-prev,
+.carousel-next {
+    width: 3rem;
+    height: 3rem;
+    background-color: yellow;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px solid black;
+    margin-left: 45%;
+}
+
+.modal-carousel-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+
+.modal-info {
+    padding: 10px;
+}
+
+.carousel-img-container {
+    width: 80%;
+    height: 80%;
+}
+
+#carousel-img {
+    padding: 10px;
+    object-fit: cover;
+    max-width: 100%;
+    min-height: 100%;
+}
+
+.carousel-selectors {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-imgs {
+    width: 9rem;
+    height: 9rem;
+}
+
+.box-1 {
+    flex-grow: 1;
+    height: 4rem;
+    /* background-color: lightblue; */
+}
+
+.box-2 {
+    flex-grow: 1;
+    height: 4rem;
+    /* background-color: lightcoral; */
+}
+
+#img-list {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#img-list img {
+    padding: 5px;
+}
+
 @media all and (max-width: 768px) {
     .categories {
         width: 80%;
         margin-left: 10%;
+    }
+
+    .destination-card {
+        width: 80%;
+    }
+    
+    #modal-img {
+        width: 15rem;
+        height: 10rem;
     }
 }
 
 @media all and (max-width: 1024px) {
     .category-header {
         width: 300px;
+    }
+    #modal-img {
+        width: 20rem;
+        height: 15rem;
+    }
+
+    .modal-carousel-wrapper {
+        flex-direction: column;
+        height: 80%;
+    }
+
+    .main-modal-img {
+        width: 100%;
+    }
+    .modal-data {
+        width: 100%;
+        flex-direction: row;
+        margin-top: 0%;
     }
 }

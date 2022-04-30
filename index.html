@@ -26,33 +26,52 @@
                 <h1 class="cat-header"> Categories </h1>
                 <div class="cards">
                     <div class="card card-dimensions">
-                        <div class="card-background island"></div>
+                        <div class="card-background card-dimensions"></div>
                         <h1 class="card-header"> Islands </h1>
                     </div>
                     <div class="card card-dimensions">
-                        <div class="card-background card-dimensions outback"></div>
+                        <div class="card-background card-dimensions"></div>
                         <h1 class="card-header"> Outback/Country </h1>
                     </div>
                     <div class="card card-dimensions">
-                        <div class="card-background card-dimensions beach"></div>
+                        <div class="card-background card-dimensions"></div>
                         <h1 class="card-header"> Beaches </h1>
                     </div>
                 </div>
             </div>
 
-            <!-- <div class="categories">
-                <div class="category-header">
-                    <h1 class="cat-h"> Recently viewed (Carousel) </h1>
-                </div>
-                <div class="cards">
-                    <div class="card card-dimensions">
-                        <div class="card-background card-dimensions outback"></div>
-                        <h1 class="card-header"> Fraser island </h1>
-                    </div>
-                   
-                </div>
-            </div> -->
+            <div id="modal-container">
+                
+                <div id="modal">
+                    <!-- Close button -->
+                    <span id="modal-close"> &times</span>
 
+                    <div class="modal-info">
+                        <p> Caption: </p>
+                        <p> Date taken: </p>
+                        <p> Weather: </p>
+                    </div>
+
+                    <div class="modal-carousel-wrapper">
+                        <img id="carousel-img" src="https://live.staticflickr.com/65535/52037773212_3051189bf7.jpg" alt="">
+                    </div>
+                    <div class="carousel-selectors">
+                        <div class="box-1">
+                            <div class="carousel-prev"> P </div>
+                        </div>
+                        <div class="box-2">
+                            <div class="carousel-next"> N </div>
+                        </div>
+                    </div>
+                    <div id="img-list">
+                        <img class="modal-imgs">
+                        <img class="modal-imgs">
+                        <img class="modal-imgs">
+                        <img class="modal-imgs">
+                        <img class="modal-imgs">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <footer> Footer </footer>
