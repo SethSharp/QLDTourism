@@ -12,15 +12,50 @@ html, body {
 .body {
     min-height: 80.70%;
 }
-
+h2, div {
+    font-family: 'Inter', sans-serif;
+}
 header {
     color: gold;
-    background-color: turquoise;
+    background-image: linear-gradient(turquoise, #528FBB);
     font-family: 'Grape Nuts', cursive;
     text-align: center;
     padding: 15px;
     height: 5rem;
     text-align: center;
+}
+
+.introduction {
+    text-align: center;
+    width: 100%;
+    height: 43rem;
+}
+
+.introduction img {
+    object-fit: fill;
+    width: 100%;
+}
+
+.intro-header {
+    background-color: white;
+    position: absolute;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 30%;
+    -moz-box-shadow: 0 0 3px #ccc;
+    -webkit-box-shadow: 0 0 3px #ccc;
+    box-shadow: 0 0 3px #ccc;
+}
+
+.intro-header p {
+    line-height: 2;
+    padding: 10px;
+}
+
+.intro-header h2 {
+    color: darkturquoise;
+    font-size: 2rem;
+    padding: 20px;
 }
 
 h1#heading {
@@ -32,6 +67,7 @@ h1#heading {
     margin-left: 2.5%;
     justify-content: center;
     text-align: center;
+    margin-top: 8rem;
 }
 
 .cat-header {
@@ -49,6 +85,15 @@ h1#heading {
 
 .card-header {
     margin-top: 40%;
+    z-index: 1;
+}
+
+.destination-header {
+    z-index: 1;
+    margin-top: 60%;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.5); 
 }
 
 .card-dimensions {
@@ -68,19 +113,17 @@ h1#heading {
     border: 3px solid maroon;
 }
 
-
-.card-background {
+.blur-background {
     filter: blur(8px);
     -webkit-filter: blur(8px);
+}
+
+.card-background {
     z-index: -1;
     position: absolute;
     background-size: cover;
     width: 278px;
     height: 278px;
-}
-
-.card-header {
-    z-index: 1;
 }
 
 .destinations {
@@ -94,6 +137,10 @@ h1#heading {
     border-radius: 8px;
     z-index: 1;
     color: white;
+}
+
+.destination:hover {
+    border: 3px solid blue;
 }
 
 .destination-dimensions {
@@ -124,7 +171,6 @@ footer {
     height: 0; 
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-
     border-bottom: 30px solid black;
 }
 
@@ -140,10 +186,8 @@ footer {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    /* padding-top: 75px;  */
-    left: 10%; top: 10%; /* top left corner at 0, 0*/
-    width: 75%; height: 80%; /* Occupies the whole window */
-    /* overflow: auto; Enable scroll if needed */
+    left: 10%; top: 5%; /* top left corner at 0, 0*/
+    width: 75%; height: 90%; /* Occupies the whole window */
     background-color: white;
     border: 3px solid black;
     padding: 10px;
@@ -169,7 +213,7 @@ footer {
 .carousel-next {
     width: 3rem;
     height: 3rem;
-    background-color: yellow;
+    background-color: lightgray;
     border-radius: 50%;
     text-align: center;
     border: 1px solid black;
@@ -179,20 +223,15 @@ footer {
 .modal-carousel-wrapper {
     display: flex;
     justify-content: center;
+    height: 60%;
 }
-
 
 .modal-info {
     padding: 10px;
 }
 
-.carousel-img-container {
-    width: 80%;
-    height: 80%;
-}
 
 #carousel-img {
-    padding: 10px;
     object-fit: cover;
     max-width: 100%;
     min-height: 100%;
@@ -204,46 +243,117 @@ footer {
 }
 
 .modal-imgs {
-    width: 9rem;
-    height: 9rem;
+    width: 7rem;
+    height: 7rem;
 }
 
 .box-1 {
     flex-grow: 1;
     height: 4rem;
-    /* background-color: lightblue; */
 }
 
 .box-2 {
     flex-grow: 1;
     height: 4rem;
-    /* background-color: lightcoral; */
 }
 
-#img-list {
+#img-list, #recent-list {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-#img-list img {
+#img-list img, #recent-list img {
     padding: 5px;
 }
 
+/* Secondary Modal for Recently viewed items*/
+#recently-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 60px;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+}
+
+#close-recently-modal {
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    top: 15px;
+    left: 35px;
+}
+
+#recently-img-container {
+    display: block;
+    margin: auto;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+#recently-img {
+    /* Keeps to dimensions */
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#recently-caption, #recently-date {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    top: 0;
+}
+
+.recent-img {
+    width: 8rem;
+    height: 8rem;
+}
+.recently-viewed {
+    padding-bottom: 20px;
+}
 @media all and (max-width: 768px) {
     .categories {
         width: 80%;
         margin-left: 10%;
+        margin-top: 12rem;
     }
 
     .destination-card {
         width: 80%;
     }
     
-    #modal-img {
-        width: 15rem;
-        height: 10rem;
+    .modal-carousel-wrapper {
+        display: flex;
+        justify-content: center;
+        height: 50%;
+    }
+
+    .carousel-img {
+        width: auto;
+        height: auto;
+    }
+    #recently-img {
+        max-width: 40%;
+        max-height: 40%;
+    }
+    .intro-header {
+        background-color: white;
+        position: absolute;
+        width: 70%;
+        margin-left: 15%;
+    }
+    .card-dimensions {
+        width: 250px;
+        height: 250px;      
     }
 }
 
@@ -251,22 +361,13 @@ footer {
     .category-header {
         width: 300px;
     }
-    #modal-img {
-        width: 20rem;
-        height: 15rem;
+    #recently-img {
+        max-width: 80%;
+        max-height: 80%;
+        margin-top: 15%;
     }
-
-    .modal-carousel-wrapper {
-        flex-direction: column;
-        height: 80%;
-    }
-
-    .main-modal-img {
-        width: 100%;
-    }
-    .modal-data {
-        width: 100%;
-        flex-direction: row;
-        margin-top: 0%;
+    #recently-img-container {
+        max-width: 80%;
+        max-height: 80%;
     }
 }

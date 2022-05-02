@@ -2,34 +2,33 @@ $(document).ready(function() {
 
     // HTML
     let destinationSection = '<div class="destination-card"> \
-        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="card-header"> a </h1></div> \
-        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="card-header">b  </h1></div> \
-        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="card-header"> c </h1></div> \
+        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="destination-header"> Destination 1 </h1></div> \
+        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="destination-header"> Destination 2 </h1></div> \
+        <div class="destination destination-dimensions"><div class="card-background destination-dimensions"> </div><h1 class="destination-header"> Destination 3 </h1></div> \
     </div>';
-
-    let recentlyViewed = [];
 
     let API_KEY = "api_key=571ee6a64d94d591df7a60ffb8f5e557";
 
     let categories = [
-        {title: "Islands", selected: false, coverImg: "", desintations: [
-            {title: "Fraser Island", coverImg: "https://live.staticflickr.com/65535/352163161_308c9ba5f7_n.jpg", thumbnails: []},
-            {title: "Morton Island", coverImg: "https://live.staticflickr.com/65535/352163161_308c9ba5f7_n.jpg", thumbnails: []},
-            {title: "Great Keppel Island", coverImg: "https://live.staticflickr.com/65535/352163161_308c9ba5f7_n.jpg", thumbnails: []}]
+        {title: "Australian Islands", selected: false, coverImg: "", desintations: [
+            {title: "Fraser Island", thumbnails: []},
+            {title: "Morton Island", thumbnails: []},
+            {title: "Keppel Island", thumbnails: []}]
         },
-        {title: "Outback", selected: false, coverImg: "", desintations: [
-            {title: "Carnarvon Gorge", coverImg: "", thumbnails: []},
-            {title: "Longreach", coverImg: "", thumbnails: []},
-            {title: "Gulf Savannah", coverImg: "", thumbnails: []}]
+        {title: "Australian Outback", selected: false, coverImg: "", desintations: [
+            {title: "Carnarvon Gorge", thumbnails: []},
+            {title: "Longreach", thumbnails: []},
+            {title: "Gulf Savannah", thumbnails: []}]
         },
-        {title: "Beaches", selected: false, coverImg: "", desintations: [
-            {title: "Rainbow Beach", coverImg: "", thumbnails: []},
-            {title: "Airlie Beach", coverImg: "", thumbnails: []},
-            {title: "Mooloolaba", coverImg: "", thumbnails: []}]
+        {title: "Australian Beaches", selected: false, coverImg: "", desintations: [
+            {title: "Rainbow Beach", thumbnails: []},
+            {title: "Airlie Beach", thumbnails: []},
+            {title: "Mooloolaba", thumbnails: []}]
         }
     ];
 
-    let carouselImages = []; // holds images for carousel
+    let carouselImages = [];
+    let recentlyViewed = [];
 
     initSite();
 
@@ -40,61 +39,111 @@ $(document).ready(function() {
     });
 
     $("#modal-close").click(() => {
+        resetRecentlyList();
         $("#modal-container").css({"display":"none"});
+        carouselImages = [];
+        $("#img-list > .modal-imgs").eq(indexInCarousel).css({"border":`none`});
+        indexInCarousel = 0;
     })
+
+    $("#close-recently-modal").click(() => {
+        resetRecentlyList();
+        $("#recently-modal").css({"display":"none"});
+    })
+
+    function resetRecentlyList() {
+        $("#recent-list").html("");
+        for (var i = 0; i < 5; i++) {
+            if (recentlyViewed[i] == undefined) {
+                // if there are < 5 recently viewed, will be filled with empty squares
+                let recentImg = `<img class="recent-img">`;
+                $("#recent-list").append(recentImg);
+            } else {
+                let recentImg = `<img class="recent-img" src="${recentlyViewed[i].sml}">`;
+                $("#recent-list").append(recentImg);
+                addRecentImageClick(i, recentlyViewed[i]);
+            }
+        }
+    }
 
     let carouselImg = $("#carousel-img");
     let indexInCarousel = 0;
     $(".carousel-prev").click(() => {
         indexInCarousel-=1;
         if (indexInCarousel < 0) {
+            // hit prev at begining of list, so go to the end
             indexInCarousel = carouselImages.length-1;
             selectCarouselImg(indexInCarousel, 0);
         } else {
             selectCarouselImg(indexInCarousel, indexInCarousel+1);
         }
-        carouselImg.attr({"src":`${carouselImages[indexInCarousel]}`});
+        setCarouselData();
     })
     
     $(".carousel-next").click(() => {
         let n = carouselImages.length;
         indexInCarousel+=1;
         if (indexInCarousel >= n) {
+            // at the end of the list, so go to the start
             indexInCarousel = 0;
             selectCarouselImg(indexInCarousel, n-1);
         } else {
             selectCarouselImg(indexInCarousel, indexInCarousel-1)
         }
-        carouselImg.attr({"src":`${carouselImages[indexInCarousel]}`});
+        setCarouselData();
     })
 
-    function selectCarouselImg(i, j) {
-        $("#img-list > .modal-imgs").eq(j).css({"border":`2px solid yellow`});
-        $("#img-list > .modal-imgs").eq(i).css({"border":`2px solid green`});
+    function addRecentImageClick(indx, newData) {
+        $(".recent-img").eq(indx).click(() => {
+            // Data to add to modal
+            $("#recently-modal").css({"display":"block"});
+            $("#recently-img").attr({"src":`${recentlyViewed[indx].modal}`});
+            $("#recently-caption").html("Caption: " + recentlyViewed[indx].caption);
+            $("#recently-date").html("Date: " + recentlyViewed[indx].date);
+            if (indx != 0) {
+                // move new dest to front and remove old location
+                moveImageToFront(indx, newData);
+            }
+        });
     }
 
-    
+    function moveImageToFront(indx, newData) {
+        // Helper function to move images within the recentlyViewed array
+        var newData = recentlyViewed[indx];
+        recentlyViewed.splice(indx, 1);
+        recentlyViewed.splice(0, 0, newData);
+    }
 
-    function initSite() {
+    function selectCarouselImg(i, j) {
+        $("#img-list > .modal-imgs").eq(j).css({"border":`none`});
+        $("#img-list > .modal-imgs").eq(i).css({"border":`2px solid black`});
+    }
+
+    function setCarouselData() {
+        carouselImg.attr({"src":`${carouselImages[indexInCarousel].modal}`});
+        $("#modal-caption").html("Caption: " + carouselImages[indexInCarousel].caption);
+        $("#modal-date").html("Date taken: " + carouselImages[indexInCarousel].date);
+        addRecentlyViewed();
+    }
+
+     function initSite() {
         for (var i = 0; i < categories.length; i++) {
-            // get category image
             coverImage(categories[i].title, i);
             for (var j = 0; j < categories[i].desintations.length; j++) { // going through each destination
-                let destination = (categories[i].desintations[j].title);
-                categories[i].desintations[j].thumbnails = getDestinationImages(destination, i, j);
+                addDestinationImages(i, j);
             }
-            break;
         }
     }
 
     function categoryClick(indx) {
         let selectedCategory = categories[indx].selected;
         if (selectedCategory == true) {
+            // if the selected category is being shown
+            // hide it
             categories[indx].selected = false;
             hideDestinations(indx);
             return;
         }
-        showDestinations(indx);
         categories[indx].selected = true;
         for (var i = 0; i < categories.length; i++) {
             if(i==indx)continue;
@@ -103,77 +152,155 @@ $(document).ready(function() {
                 hideDestinations(i);
             }
         }
+        // hides all other destinations and shows new ones
+        showDestinations(indx);
     }
 
     function hideDestinations(i) {
-        $(`.card > .card-header`).eq(i).css({"color":"white"})
+        $(".card-header").eq(i).css({"color":"white"})
         $("div.destination-card").remove();
     }
 
     function showDestinations(categoryIndx) {
-        currentIndexDestination = categoryIndx;
+        $(".card-header").eq(categoryIndx).css({"color":"maroon"});
         let width = $(document).width();
         if (width <= 768) { // mobile view (Single column)
             $(".card").eq(categoryIndx).after(destinationSection);
         } else if (width <= 989) { // mid range view (2 columns)
             $(".card").eq(1).after(destinationSection);
         } else { // full desktop (3 columns)
-            $(".categories").append(destinationSection)
+            $(".categories").append(destinationSection);
         }
         addDestinationData(categoryIndx);
     }
 
-    // When destination section is added, relevant imgs/data for each destinations is required
     function addDestinationData(indx) {
+        // When destination section is added, relevant imgs/data for each destination is required
         let des = categories[indx].desintations;
         for (var i = 0 ; i < des.length; i++) {
             destinationClick(i, des[i]);
-            $(".destination-card  > .destination > .card-background").eq(i).css({"background-image":`url(${des[i].coverImg})`})
+            var src = des[i].thumbnails[0].modal;
+            $(".destination-card  > .destination > .card-background").eq(i).css({"background-image":`url(${src})`});
+            $(".destination-header").eq(i).html(des[i].title);
         }
     }
 
     function destinationClick(i, des) {
+        // Setting up the carousel modal and adding the data to the DOM
         $(".destination-card > .destination").eq(i).click(() => {
             $("#modal-container").css({"display":"block"});
-            $("#carousel-img").attr({"src":`${des.thumbnails[1].src}`, "alt": `${des.title}`});
+            $("#carousel-img").attr({"src":`${des.thumbnails[0].modal}`, "alt": `${des.title}`});
             for (var j = 0; j < des.thumbnails.length;j++) {
-                let thumbnailImg = `<img class="modal-imgs" src="${des.thumbnails[j].src}" alt="...">`;
-                carouselImages.push(des.thumbnails[j].src);
-                $("#img-list > .modal-imgs").eq(j).attr({"src":`${des.thumbnails[j].src}`});//append(thumbnailImg);
+                carouselImages.push(des.thumbnails[j]);
+                $("#img-list > .modal-imgs").eq(j).attr({"src":`${des.thumbnails[j].sml}`});
             }
             selectCarouselImg(0);
-        });
-        
+            setCarouselData();
+        });   
     }
 
-    // $(window).resize(function() { });
+    function addRecentlyViewed() {
+        // Adds an image to recently viewed list
+        // if the image exists, it can't exist twice so its moved to the front
+        for (var i = 0; i < recentlyViewed.length; i++) {
+            if (recentlyViewed[i].id == carouselImages[indexInCarousel].id) {
+                moveImageToFront(i, carouselImages[indexInCarousel]);
+                return; // dont add image to list
+            }
+        }
+        recentlyViewed.splice(0, 0, carouselImages[indexInCarousel]);
+        // deal with overflow (only need 5 recently viewed)
+        if (recentlyViewed.length >= 6) {
+            recentlyViewed.pop();
+        }
+    }
 
-    // FLICKr
+    // FLICKR API functions
+    function createSearchString(searchVal) { // finds photos with search condition
+        return `https://www.flickr.com/services/rest/?method=flickr.photos.search&tags=${searchVal}&per_page=20$page=1&format=json&nojsoncallback=1&${API_KEY}`;
+    }
+
+    function createInfoSearchString(photoID) { // search for info on an image (Used to get the date)
+        return `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&photo_id=${photoID}&format=json&nojsoncallback=1&${API_KEY}`;
+    }
+
+    function createFavouriteSearchString(photoID) { // will return how many people have favourite the post
+        return `https://www.flickr.com/services/rest/?method=flickr.photos.getFavorites&photo_id=${photoID}&format=json&nojsoncallback=1&${API_KEY}`;
+    }
+
+    function createSizesString(photoID) { // gets sizes for each image
+        return `https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&photo_id=${photoID}&${API_KEY}`;
+    }
+
     function coverImage(category, index) {
-        let str = `https://www.flickr.com/services/rest/?method=flickr.photos.search&tags=${category}&per_page=5&format=json&nojsoncallback=1&${API_KEY}`;
+        let str = createSearchString(category);
         $.get(str, data => {
-            var photoID = data.photos.photo[0].id;
-            return getSizes(photoID, index);
+            setCoverImg(data.photos.photo[0].id, index);
         });
     }
-
-    function getSizes(photoID, index) {
-        let getSizesStr = `https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&photo_id=${photoID}&${API_KEY}`; 
+    
+    function setCoverImg(photoID, index) {
+        let getSizesStr = createSizesString(photoID); 
         $.get(getSizesStr).then((data) => {
-            console.log(data);
             categories[index].coverImg = data.sizes.size[1].source;
+            // sets the cover images of each category
             let card = $(".categories > .cards > .card > .card-background").eq(index);
             card.css({"background-image": `url(${categories[index].coverImg})`});
         });
     }
 
-    function getDestinationImages(destination, i, j) {
-        let imgs = [];
-        for (var i = 0; i < 5; i++) {
-            var img = (i%2==0) ? "https://live.staticflickr.com/65535/52037773212_3051189bf7.jpg" : "https://live.staticflickr.com/65535/52038513211_f534798a73.jpg";
-            imgs.push({src:img, sml:"", lrg:"", date:"DD/MM/YYYY", caption: "Test caption"});
-        }
-        return imgs;
+    function addDestinationImages(i, j) {
+        let destination = categories[i].desintations[j];
+        let searchStr = createSearchString(destination.title);
+        $.get(searchStr, data => {
+            for (var k = 0; k < 5; k++) {
+                if (categories[i].desintations[j].thumbnails.length >= 4) break;
+                getDestinationImageSize(data.photos.photo[k].id, i, j, data.photos.photo[k].title);
+                // getBestPhoto(data.photos.photo, i, j, k);
+            }
+            // original attempt at getting the best images
+            // let kValues = [];
+            // var count = 0, k = 0, h = 0;
+            // while (count <= 5 && k <= 10) {
+            //     kValues.push(k);
+            //     var response = getBestphoto(data.photos.photo[k].id, i, j, k).then((a) => {
+            //         var amount = a.photo.total;
+            //         if (amount >= 10) {
+            //             var old = kValues[h];
+            //             getDestinationImageSize(data.photos.photo[old].id, i, j, destination.title);
+            //             count++;
+            //             h++;
+            //         }
+            //     })
+            //     k++;
+            // }
+        });
     }
 
+    async function getBestphoto(id, i, j, k) {
+        // using favourtie as it will return the most favouried images
+        let favSearchStr = createFavouriteSearchString(id);
+        const result = await $.get(favSearchStr);
+        return result;
+    }
+
+    function getDestinationImageSize(photoID, i, j, title) {
+        let getSizesStr = createSizesString(photoID);
+        $.get(getSizesStr).then(data => {
+            var img = data.sizes.size;
+            // logic to get the optimal sml and lrg images
+            var n = data.sizes.size.length;
+            addThumbnailInfo(photoID, i, j, img[n-1].source, img[3].source, img[1].source, title, photoID);
+        })
+    }
+
+    function addThumbnailInfo(photoID, i, j, img, sml, lrg, cap, id) {
+        let searchString = createInfoSearchString(photoID);
+        $.get(searchString, data => {
+            let date = data.photo.dates.taken;
+            date = date.substring(0,11);
+            var info = {modal:img, sml:sml, lrg:lrg, date:date, caption: cap, id:id};
+            categories[i].desintations[j].thumbnails.push(info);
+        });
+    }
 });

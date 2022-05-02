@@ -9,34 +9,60 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&family=Inter:wght@600;700&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script defer src="js/main.js"></script>
+        <!-- Not defering as gettig Flickr info -->
+        <script src="js/main.js"></script>
     </head>
     <body>
 
         <header> 
-            <h1 id="heading"> QLD Tourism</h1>
+            <h1 id="heading"> QLD The Sunshine State</h1>
         </header>
 
         <div class="body">
 
+            <div class="introduction">
+                
+                <div class="intro-header">
+                    <h2> QLD Tourism</h2>
+                    <p> 
+                        Wunya (welcome, greetings) is from the Yuggera language of Brisbane and the Gubbi Gubbi language of the Sunshine Coast. Sew ngapa (welcome) is from the Kala Lagaw Ya and Kala Kawaw Ya languages of the Western Torres Straits.
+                        Our garden's a one-million-year-old rainforest. Out the back is a red desert of dinosaur bones. Our swimming pool? The world's largest reef. 
+                        Here, you’ll find experiences like nowhere else on the planet, but where the most simple moments are just as memorable. Where we can reconnect with nature, ourselves and our loved ones by finding joy in both the big and little things, together.
+                    </p>
+                </div><img id="intro-img" src="./photos/main.png">
+            </div>
 
             <div class="categories">
-                <h1 class="cat-header"> Categories </h1>
+                <h2 class="cat-header"> Where would you like to go? </h2>
                 <div class="cards">
                     <div class="card card-dimensions">
-                        <div class="card-background card-dimensions"></div>
-                        <h1 class="card-header"> Islands </h1>
+                        <div class="card-background blur-background card-dimensions"></div>
+                        <h2 class="card-header"> An Island </h2>
                     </div>
                     <div class="card card-dimensions">
-                        <div class="card-background card-dimensions"></div>
-                        <h1 class="card-header"> Outback/Country </h1>
+                        <div class="card-background blur-background card-dimensions"></div>
+                        <h2 class="card-header"> The Outback </h2>
                     </div>
                     <div class="card card-dimensions">
-                        <div class="card-background card-dimensions"></div>
-                        <h1 class="card-header"> Beaches </h1>
+                        <div class="card-background blur-background card-dimensions"></div>
+                        <h2 class="card-header"> or a Beach </h2>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="recently-viewed">
+                <h2 class="cat-header"> Recently Viewed</h2>
+                <div id="recent-list">
+                    <img class="recent-img">
+                    <img class="recent-img">
+                    <img class="recent-img">
+                    <img class="recent-img">
+                    <img class="recent-img">
                 </div>
             </div>
 
@@ -47,9 +73,8 @@
                     <span id="modal-close"> &times</span>
 
                     <div class="modal-info">
-                        <p> Caption: </p>
-                        <p> Date taken: </p>
-                        <p> Weather: </p>
+                        <p id="modal-caption"> Caption: </p>
+                        <p id="modal-date"> Date taken: </p>
                     </div>
 
                     <div class="modal-carousel-wrapper">
@@ -57,10 +82,10 @@
                     </div>
                     <div class="carousel-selectors">
                         <div class="box-1">
-                            <div class="carousel-prev"> P </div>
+                            <div class="carousel-prev"> </div>
                         </div>
                         <div class="box-2">
-                            <div class="carousel-next"> N </div>
+                            <div class="carousel-next"> </div>
                         </div>
                     </div>
                     <div id="img-list">
@@ -72,9 +97,16 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <footer> Footer </footer>
-        
+            <div id="recently-modal">
+                <span id="close-recently-modal"> &times; </span>
+                <div id="recently-img-container">
+                    <img id="recently-img">
+                </div>
+                
+                <div id="recently-caption"> Caption: Some title</div>
+                <div id="recently-date"> Date: af amapor</div>
+            </div>
+        </div>
     </body>
 </html>
